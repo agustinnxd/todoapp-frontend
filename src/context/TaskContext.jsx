@@ -47,13 +47,13 @@ export function TaskProvider({ children }) {
         setTasks(newTasks)
     }
 
-    const updateTask = async(id, task) => {
+    const updateTask = async (id, task) => {
         try {
             await updateTaskRequest(id, task)
         } catch (error) {
             console.log(error);
         }
-        
+
     }
 
     return (
