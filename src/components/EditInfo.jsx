@@ -2,7 +2,7 @@ import React from 'react'
 import { useUser } from '../context/UserContext'
 import { useForm } from 'react-hook-form'
 
-export const EditInfo = ({ type, setEditUsername, setEditEmail, user }) => {
+export const EditInfo = ({ type, user }) => {
 
 
     const { updateEmail, updateUsername, errors: updateErrors } = useUser()

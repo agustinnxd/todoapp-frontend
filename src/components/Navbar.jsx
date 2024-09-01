@@ -16,23 +16,28 @@ export const Navbar = () => {
                 {isAuthenticated == true ? (
                     <>
                         <li>
+                            <Link to='/tasks' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold'>Tasks</Link>
+                        </li>
+
+                        <li>
                             <Link to='/add-task' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold'>Add Task</Link>
                         </li>
-                        <li>
-                            <Link to='/login' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold' onClick={() => { logout() }}>Logout</Link>
-                        </li>
+
                         <li>
                             <Link to='/profile' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold'>Profile</Link>
                         </li>
+
                         <li>
-                            <Link to='/tasks' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold'>Tasks</Link>
+                            <Link to='/login' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold' onClick={() => { logout() }}>Logout</Link>
                         </li>
+
                     </>
                 ) : (
                     <>
                         <li>
                             <Link to='/login' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold'>Login</Link>
                         </li>
+
                         <li>
                             <Link to='/register' className='bg-blue-600 px-4 py-1 rounded-lg font-semibold'>Signin</Link>
                         </li>

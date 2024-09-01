@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom"
 import { useTasks } from "../context/TaskContext"
-import { useEffect } from "react"
 
 export const TaskCard = ({ title, description, id }) => {
 
