@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 import { createTaskRequest, deleteTaskRequest, getTaskRequest, getTasksRequest, updateTaskRequest } from '../api/tasks'
+import { BiLogIn } from "react-icons/bi";
 
 const TaskContext = createContext();
 
@@ -18,8 +19,6 @@ export function TaskProvider({ children }) {
 
     const [tasks, setTasks] = useState([])
     const [errors, setErrors] = useState([])
-    const [editTitle, setEditTitle] = useState(false)
-    const [editDescription, setEditDescription] = useState(false)
 
     const getTasks = async () => {
         try {
@@ -59,9 +58,8 @@ export function TaskProvider({ children }) {
             const newTask = await updateTaskRequest(id, task)
             const newTasks = tasks.map((t) => t._id !== id ? t : newTask)
             setTasks(newTasks)
-            setEditTitle(false)
         } catch (error) {
-            setErrors(error.response.data.message);
+            setErrors(error.response.data.message)
         }
 
     }
@@ -69,7 +67,6 @@ export function TaskProvider({ children }) {
     const updateDescription = async (id, task) => {
         try {
             await updateTaskRequest(id, task)
-            setEditDescription(false)
 
         } catch (error) {
             setErrors(error.response.data.message);
@@ -77,20 +74,9 @@ export function TaskProvider({ children }) {
 
     }
 
-    useEffect(() => {
-      getTasks()
-
-    }, [tasks])
-    
-    
-
     return (
         <TaskContext.Provider value={{
             tasks,
-            setEditDescription,
-            setEditTitle,
-            editTitle,
-            editDescription,
             errors,
             createTask,
             getTasks,

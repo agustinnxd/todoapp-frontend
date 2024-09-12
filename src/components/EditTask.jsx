@@ -2,17 +2,19 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { useTasks } from '../context/TaskContext'
 
-export const EditTask = ({ type, id }) => {
+export const EditTask = ({ type, id, setEditDescription, setEditTitle }) => {
 
     const { updateDescription, updateTitle, errors: updateErrors } = useTasks()
     const { register, handleSubmit, formState: { errors } } = useForm()
 
     const onSubmitTitle = handleSubmit(async (values) => {
         await updateTitle(id, values)
+        setEditTitle(false)
     })
 
     const onSubmitDescription = handleSubmit(async (values) => {
         await updateDescription(id, values)
+        setEditDescription(false)
     })
 
     return (
@@ -53,7 +55,7 @@ export const EditTask = ({ type, id }) => {
                     :
 
                     <form onSubmit={onSubmitDescription}>
-                        <input
+                        <textarea
                             type="text"
                             {...register('description')}
                             className='max-w-4xl w-full bg-zinc-700 text-white px-4 py-2 mt-2 rounded-md'
@@ -61,7 +63,7 @@ export const EditTask = ({ type, id }) => {
                         />
 
                         <button
-                            className='bg-blue-600 w-20 h-8 my-4 rounded-md font-semibold text-center'
+                            className='bg-blue-600 w-20 h-8 my-2 rounded-md font-semibold text-center'
                         >
                             Save
                         </button>

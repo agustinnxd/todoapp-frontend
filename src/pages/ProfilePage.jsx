@@ -22,7 +22,7 @@ export const ProfilePage = () => {
 
             ?
 
-            <EditInfo type={'username'} user={user} />
+            <EditUserInfo type={'username'} user={user} />
 
 
             :
@@ -44,7 +44,7 @@ export const ProfilePage = () => {
 
             ?
 
-            <EditInfo type={'email'} user={user} />
+            <EditUserInfo type={'email'} user={user} />
 
 
             :
