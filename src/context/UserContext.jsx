@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react"
-import { deleteUserRequest, getUserRequest, updateUserRequest } from "../api/users"
+import { deleteUserRequest, updateUserRequest } from "../api/users"
 import { useAuth } from "./AuthContext"
 
 const UserContext = createContext()
@@ -19,16 +19,6 @@ export function UserProvider({ children }) {
     const [errors, setErrors] = useState([])
     const [editUsername, setEditUsername] = useState(false)
     const [editEmail, setEditEmail] = useState(false)
-
-    const getUser = async (id) => {
-        try {
-            const res = await getUserRequest(id)
-            setUser(res.data)
-        } catch (error) {
-            console.log(error);
-            setErrors(error.response.data)
-        }
-    }
 
     const updateEmail = async (id, data) => {
         try {
@@ -70,7 +60,6 @@ export function UserProvider({ children }) {
         <UserContext.Provider value={{
             errors,
             setErrors,
-            getUser,
             updateEmail,
             updateUsername,
             deleteUser,

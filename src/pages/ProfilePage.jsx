@@ -2,7 +2,7 @@ import { BiEdit } from "react-icons/bi";
 
 import { useUser } from "../context/UserContext"
 import { useAuth } from '../context/AuthContext'
-import { EditInfo } from "../components/EditInfo";
+import { EditUserInfo } from "../components/EditUserInfo";
 
 export const ProfilePage = () => {
 
@@ -22,7 +22,7 @@ export const ProfilePage = () => {
 
             ?
 
-            <EditInfo type={'username'} setEditEmail={setEditEmail} setEditUsername={setEditUsername} user={user} />
+            <EditInfo type={'username'} user={user} />
 
 
             :
@@ -44,7 +44,7 @@ export const ProfilePage = () => {
 
             ?
 
-            <EditInfo type={'email'} setEditEmail={setEditEmail} setEditUsername={setEditUsername} user={user} />
+            <EditInfo type={'email'} user={user} />
 
 
             :

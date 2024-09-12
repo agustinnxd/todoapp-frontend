@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 import { createTaskRequest, deleteTaskRequest, getTaskRequest, getTasksRequest, updateTaskRequest } from '../api/tasks'
 
@@ -17,6 +17,9 @@ export const useTasks = () => {
 export function TaskProvider({ children }) {
 
     const [tasks, setTasks] = useState([])
+    const [errors, setErrors] = useState([])
+    const [editTitle, setEditTitle] = useState(false)
+    const [editDescription, setEditDescription] = useState(false)
 
     const getTasks = async () => {
         try {
@@ -38,7 +41,11 @@ export function TaskProvider({ children }) {
     }
 
     const createTask = async (task) => {
-        await createTaskRequest(task)
+        try {
+            await createTaskRequest(task)
+        } catch (error) {
+            setErrors(error.response.data.message)
+        }
     }
 
     const deleteTask = async (taskId) => {
@@ -47,23 +54,50 @@ export function TaskProvider({ children }) {
         setTasks(newTasks)
     }
 
-    const updateTask = async (id, task) => {
+    const updateTitle = async (id, task) => {
         try {
-            await updateTaskRequest(id, task)
+            const newTask = await updateTaskRequest(id, task)
+            const newTasks = tasks.map((t) => t._id !== id ? t : newTask)
+            setTasks(newTasks)
+            setEditTitle(false)
         } catch (error) {
-            console.log(error);
+            setErrors(error.response.data.message);
         }
 
     }
 
+    const updateDescription = async (id, task) => {
+        try {
+            await updateTaskRequest(id, task)
+            setEditDescription(false)
+
+        } catch (error) {
+            setErrors(error.response.data.message);
+        }
+
+    }
+
+    useEffect(() => {
+      getTasks()
+
+    }, [tasks])
+    
+    
+
     return (
         <TaskContext.Provider value={{
             tasks,
+            setEditDescription,
+            setEditTitle,
+            editTitle,
+            editDescription,
+            errors,
             createTask,
             getTasks,
             deleteTask,
             getTask,
-            updateTask
+            updateDescription,
+            updateTitle
         }}>
             {children}
         </TaskContext.Provider>

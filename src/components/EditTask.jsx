@@ -1,48 +1,46 @@
 import React from 'react'
-import { useUser } from '../context/UserContext'
 import { useForm } from 'react-hook-form'
+import { useTasks } from '../context/TaskContext'
 
-export const EditInfo = ({ type, user }) => {
+export const EditTask = ({ type, id }) => {
 
-
-    const { updateEmail, updateUsername, errors: updateErrors } = useUser()
+    const { updateDescription, updateTitle, errors: updateErrors } = useTasks()
     const { register, handleSubmit, formState: { errors } } = useForm()
 
-    const onSubmitUsername = handleSubmit(async (values) => {
-        await updateUsername(user._id, values)
+    const onSubmitTitle = handleSubmit(async (values) => {
+        await updateTitle(id, values)
     })
 
-    const onSubmitEmail = handleSubmit(async (values) => {
-        await updateEmail(user._id, values)
+    const onSubmitDescription = handleSubmit(async (values) => {
+        await updateDescription(id, values)
     })
 
     return (
-
         <>
+
             {
                 updateErrors.map((error, i) => (
                     <div className='bg-red-500 p-2 text-white mt-2' key={i}>{error}</div>
                 ))
             }
             {
-                (type === 'username')
+                (type === 'title')
 
                     ?
 
-                    <form onSubmit={onSubmitUsername}>
+                    <form onSubmit={onSubmitTitle}>
                         <input
                             type="text"
-                            {...register('username', { minLength: 4, maxLength: 15 })}
+                            {...register('title', { minLength: 3, maxLength: 21 })}
                             className='max-w-4xl w-full bg-zinc-700 text-white px-4 py-2 mt-2 rounded-md'
-                            placeholder='Username'
+                            placeholder='Title'
                         />
 
                         {
-                            (errors.username && errors.username.type === 'minLength') && <p className='text-red-500'>Username must be at least 4 characters</p>
+                            (errors.title && errors.title.type === 'minLength') && <p className='text-red-500'>Title must be at least 3 characters</p>
                         }
-
                         {
-                            (errors.username && errors.username.type === 'maxLength') && <p className='text-red-500'>Username must be less than 16 characters</p>
+                            (errors.title && errors.title.type === 'maxLength') && <p className='text-red-500'>Title must be at less than 22 characters</p>
                         }
 
                         <button
@@ -50,17 +48,16 @@ export const EditInfo = ({ type, user }) => {
                         >
                             Save
                         </button>
-                        <hr />
                     </form>
 
                     :
 
-                    <form onSubmit={onSubmitEmail}>
+                    <form onSubmit={onSubmitDescription}>
                         <input
                             type="text"
-                            {...register('email')}
-                            className='max-w-4xl w-full bg-zinc-700 text-white px-4 py-2 mt-4 rounded-md'
-                            placeholder='Email'
+                            {...register('description')}
+                            className='max-w-4xl w-full bg-zinc-700 text-white px-4 py-2 mt-2 rounded-md'
+                            placeholder='Description'
                         />
 
                         <button
@@ -68,7 +65,6 @@ export const EditInfo = ({ type, user }) => {
                         >
                             Save
                         </button>
-                        <hr />
                     </form>
             }
         </>
